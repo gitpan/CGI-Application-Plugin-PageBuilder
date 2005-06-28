@@ -6,8 +6,8 @@ WriteMakefile(
     NAME              => 'CGI::Application::Plugin::PageBuilder',
     VERSION_FROM      => 'PageBuilder.pm', # finds $VERSION
     PREREQ_PM         => {
-						 'CGI::Application' => '4.0',
-						 }, # e.g., Module::Name => 1.1
+			  'CGI::Application' => '4.0',
+			 }, # e.g., Module::Name => 1.1
     ($] >= 5.005 ?     ## Add these new keywords supported since 5.005
       (ABSTRACT_FROM  => 'PageBuilder.pm', # retrieve abstract from module
        AUTHOR         => 'Clint Moore <cmoore@cpan.org>') : ()),

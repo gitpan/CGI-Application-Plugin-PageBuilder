@@ -94,7 +94,7 @@ This module is free software; you can redistribute it and/or modify it under the
 
 
 package CGI::Application::Plugin::PageBuilder;
-$VERSION = '0.7';
+$VERSION = '0.8';
 
 use Carp;
 
@@ -107,8 +107,6 @@ use vars '@EXPORT';
 			 pb_param
 			 pb_build
 			);
-
-use Data::Dumper;
 
 sub pb_init {
 	my $self = shift;
@@ -142,10 +140,6 @@ sub pb_build {
 		$self->pb_template( $self->{__PB_HEADER} );
 	}
 
-	if ( exists( $self->{__PB_TOOLBAR} ) ) {
-		$self->{__PB_BUFFER} .= $self->{__PB_TOOLBAR};
-	}
-
 	foreach my $template ( @{ $self->{__PB_TEMPLATE_LIST} } ) {
 		$self->{__PB_BUFFER} .= $template->output();
 	}
@@ -175,3 +169,4 @@ sub pb_param {
 }
 
 1;
+

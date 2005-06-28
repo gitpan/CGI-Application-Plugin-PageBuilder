@@ -3,7 +3,12 @@ use strict;
 use warnings;
 
 use Test::More;
-use HTML::TreeBuilder;
+eval { require HTML::TreeBuilder };
+if ( $@ ) {
+	plan skip_all => "HTML::TreeBuilder required for these tests.";
+} else {
+	plan tests => 26;
+}
 
 
 my $data = {
@@ -13,7 +18,6 @@ my $data = {
 			four => 'The four',
 		   };
 
-plan tests => 26;
 
 {
 	package TestApp;
