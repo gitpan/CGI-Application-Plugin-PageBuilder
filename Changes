@@ -1,5 +1,9 @@
 Revision history for Perl extension CGI::Application::PageBuilder.
 
+0.8 - Cleanup and test changes.
+
+0.7 - Switched to being a CGI::App plugin instead of a standalone module.
+
 0.6 - POD changes, some cleanup.
 
 0.5 - Initial release to CPAN.

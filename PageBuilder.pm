@@ -94,7 +94,7 @@ This module is free software; you can redistribute it and/or modify it under the
 
 
 package CGI::Application::Plugin::PageBuilder;
-$VERSION = '0.8';
+$VERSION = '0.81';
 
 use Carp;
 
