@@ -4,12 +4,8 @@ use warnings;
 
 use Test::More;
 eval { require HTML::TreeBuilder };
-if ( $@ ) {
-	plan skip_all => "HTML::TreeBuilder required for these tests.";
-} else {
-	plan tests => 26;
-}
 
+$@ ? plan skip_all => "HTML::TreeBuilder required for these tests." : plan tests => 26;
 
 my $data = {
 			one => 'The one',

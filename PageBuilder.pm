@@ -94,7 +94,7 @@ This module is free software; you can redistribute it and/or modify it under the
 
 
 package CGI::Application::Plugin::PageBuilder;
-$VERSION = '0.81';
+$VERSION = '0.8.2';
 
 use Carp;
 
@@ -137,7 +137,7 @@ sub pb_build {
 	my $self = shift;
 
 	if ( exists $self->{__PB_HEADER} ) {
-		$self->pb_template( $self->{__PB_HEADER} );
+		$self->{__PB_BUFFER} = $self->load_tmpl( $self->{__PB_HEADER} )->output();
 	}
 
 	foreach my $template ( @{ $self->{__PB_TEMPLATE_LIST} } ) {
@@ -145,7 +145,7 @@ sub pb_build {
 	}
 
 	if ( exists $self->{__PB_FOOTER} ) {
-		$self->pb_template( $self->{__PB_FOOTER} );
+		$self->{__PB_BUFFER} .= $self->load_tmpl( $self->{__PB_FOOTER} )->output();
 	}
 	return $self->{__PB_BUFFER};
 }
@@ -169,4 +169,3 @@ sub pb_param {
 }
 
 1;
-
