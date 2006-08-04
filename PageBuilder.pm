@@ -59,13 +59,13 @@ Which arguably looks much cleaner.
 
 $self->pb_template( 'the_template_to_use.tmpl', ... );
 
-Adds the template to the page.  Any arguments past the template name are passed to HTML::Template.
+Adds the template to the page.  Any arguments past the template name are passed to HTML::Template. Returns the page contents.
 
 =head2 pb_param
 
 $self->pb_param( name, value );
 
-Sets the value for the param in the template.  This applies to the last template loaded by B<pb_template()>.
+Sets the value for the param in the template.  This applies to the last template loaded by B<pb_template()>.  Returns the page contents.
 
 =head2 pb_build
 
@@ -91,7 +91,7 @@ This module is free software; you can redistribute it and/or modify it under the
 
 
 package CGI::Application::Plugin::PageBuilder;
-$VERSION = '0.9';
+$VERSION = '0.9.1_1';
 
 use Carp;
 
@@ -108,15 +108,18 @@ use vars '@EXPORT';
 sub pb_template {
 	my( $self, $template, %options ) = @_;
 
+	my $t_template = $self->load_tmpl( $template, %options );
+	return undef unless $t_template;
+
+	push( @{ $self->{__PB_TEMPLATE_LIST} }, $t_template );
 	$self->{__PB__TEMPLATE_COUNT}++;
-	my $status = $self->load_tmpl( $template, %options );
-	push( @{ $self->{__PB_TEMPLATE_LIST} }, $status );
-	return $status;
+	return $self->pb_build();
 }
 
 sub pb_build {
 	my $self = shift;
 
+	$self->{__PB_BUFFER} = '';
 	foreach my $template ( @{ $self->{__PB_TEMPLATE_LIST} } ) {
 		$self->{__PB_BUFFER} .= $template->output();
 	}
@@ -124,21 +127,11 @@ sub pb_build {
 }
 
 sub pb_param {
-	my( $self ) = shift;
-	my( $param ) = shift;
+	my( $self, $param, $value ) = @_;
 
-	if ( ref( $param ) eq 'HASH' ) {
-		while ( my( $p, $v ) = each %{ $param } ) {
-			${${ $self->{__PB_TEMPLATE_LIST} }[$#{$self->{__PB_TEMPLATE_LIST}}]}->param( $p, $v );
-		}
-		return;
-	}
-
-	my $value = shift;
-	return undef unless( $value );
-
+	return undef unless $value;
 	${$self->{__PB_TEMPLATE_LIST}}[$#{@{$self->{__PB__TEMPLATE_LIST}}}]->param( $param, $value );
-	return 1;
+	return $self->pb_build();
 }
 
 1;
