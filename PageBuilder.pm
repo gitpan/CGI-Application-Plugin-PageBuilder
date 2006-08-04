@@ -1,12 +1,12 @@
 =head1 NAME
 
-CGI::Application::Plugin::PageBuilder - Simplifies building pages with multiple templates in CGI::Application.
+CGI::Application::Plugin::PageBuilder - Simplifies building pages with multiple templates.
 
 =head1 SYNOPSIS
 
-This module is built on the idea that building complex web pages with the default CGI::Application method can get to be a real mess.  I personally found it much easier to build pages from many different smaller templates than to try to create one large template.  This is especially true when displaying large sets of data from a database where you would be filling in a lot of <TMPL_VAR>s for each cell.  This module aims to make that process a little easier.
+This module is built on the idea that building complex web pages with the default CGI::Application method can get to be a real mess if you prefer to load many smaller templates to create your pages.
 
-So instead of:
+Now instead of
 
  sub run_mode {
  	my $self = shift;
@@ -31,17 +31,12 @@ So instead of:
 
 You can do this:
 
- In your CGI:App subclass:
-
- sub setup {
-     ...
-	 $self->pb_init( { header => 'header.tmpl', footer => 'footer.tmpl' } );
-	 ...
- }
+ CGI:App subclass:
 
  sub run_mode {
   	my $self = shift;
 
+	$self->pb_template( 'header.tmpl' );
 	$self->pb_template( 'view_start.tmpl' );
 
  	my $db = MyApp::DB::Views->retrieve_all();
@@ -51,6 +46,8 @@ You can do this:
 		$self->pb_param( info, $line->info() );
  	}
 	$self->pb_template( 'view_end.tmpl' );
+	$self->pb_template( 'footer.tmpl' );
+
  	return $self->pb_build();
  }
 
@@ -62,7 +59,7 @@ Which arguably looks much cleaner.
 
 $self->pb_template( 'the_template_to_use.tmpl', ... );
 
-Adds the template to the page and sets it as the next template to apply param to.  Any agruments past the template name are passed to HTML::Template as arguments like "die_on_bad_params => 0", etc.
+Adds the template to the page.  Any arguments past the template name are passed to HTML::Template.
 
 =head2 pb_param
 
@@ -94,7 +91,7 @@ This module is free software; you can redistribute it and/or modify it under the
 
 
 package CGI::Application::Plugin::PageBuilder;
-$VERSION = '0.8.2';
+$VERSION = '0.9';
 
 use Carp;
 
@@ -108,24 +105,8 @@ use vars '@EXPORT';
 			 pb_build
 			);
 
-sub pb_init {
-	my $self = shift;
-	my $options = shift;
-
-	$self->{__PB_BUFFER} = '';
-	$self->{__PB_TEMPLATE_COUNT} = 0;
-	$self->{__PB_HEADER} = $options->{header} if exists( $options->{header} );
-	$self->{__PB_FOOTER} = $options->{footer} if exists( $options->{footer} );
-	$self->{__PB_READY} = 1;
-	$self->{__PB_TEMPLATE_LIST} = ();
-	$self->{__PB_TOOLBAR} = $options->{toolbar} if exists( $options->{toolbar} );
-	return $self;
-}
-
 sub pb_template {
 	my( $self, $template, %options ) = @_;
-
-	$self->pb_init() unless exists $self->{__PB_READY};
 
 	$self->{__PB__TEMPLATE_COUNT}++;
 	my $status = $self->load_tmpl( $template, %options );
@@ -136,16 +117,8 @@ sub pb_template {
 sub pb_build {
 	my $self = shift;
 
-	if ( exists $self->{__PB_HEADER} ) {
-		$self->{__PB_BUFFER} = $self->load_tmpl( $self->{__PB_HEADER} )->output();
-	}
-
 	foreach my $template ( @{ $self->{__PB_TEMPLATE_LIST} } ) {
 		$self->{__PB_BUFFER} .= $template->output();
-	}
-
-	if ( exists $self->{__PB_FOOTER} ) {
-		$self->{__PB_BUFFER} .= $self->load_tmpl( $self->{__PB_FOOTER} )->output();
 	}
 	return $self->{__PB_BUFFER};
 }
@@ -169,3 +142,4 @@ sub pb_param {
 }
 
 1;
+

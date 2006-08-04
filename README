@@ -1,17 +1,13 @@
 NAME
     CGI::Application::Plugin::PageBuilder - Simplifies building pages with
-    multiple templates in CGI::Application.
+    multiple templates.
 
 SYNOPSIS
     This module is built on the idea that building complex web pages with
-    the default CGI::Application method can get to be a real mess. I
-    personally found it much easier to build pages from many different
-    smaller templates than to try to create one large template. This is
-    especially true when displaying large sets of data from a database where
-    you would be filling in a lot of <TMPL_VAR>s for each cell. This module
-    aims to make that process a little easier.
+    the default CGI::Application method can get to be a real mess if you
+    prefer to load many smaller templates to create your pages.
 
-    So instead of:
+    Now instead of
 
      sub run_mode {
             my $self = shift;
@@ -36,17 +32,12 @@ SYNOPSIS
 
     You can do this:
 
-     In your CGI:App subclass:
-
-     sub setup {
-         ...
-             $self->pb_init( { header => 'header.tmpl', footer => 'footer.tmpl' } );
-             ...
-     }
+     CGI:App subclass:
 
      sub run_mode {
             my $self = shift;
 
+            $self->pb_template( 'header.tmpl' );
             $self->pb_template( 'view_start.tmpl' );
 
             my $db = MyApp::DB::Views->retrieve_all();
@@ -56,6 +47,8 @@ SYNOPSIS
                     $self->pb_param( info, $line->info() );
             }
             $self->pb_template( 'view_end.tmpl' );
+            $self->pb_template( 'footer.tmpl' );
+
             return $self->pb_build();
      }
 
@@ -65,9 +58,8 @@ METHODS
   pb_template
     $self->pb_template( 'the_template_to_use.tmpl', ... );
 
-    Adds the template to the page and sets it as the next template to apply
-    param to. Any agruments past the template name are passed to
-    HTML::Template as arguments like "die_on_bad_params => 0", etc.
+    Adds the template to the page. Any arguments past the template name are
+    passed to HTML::Template.
 
   pb_param
     $self->pb_param( name, value );

@@ -1,5 +1,7 @@
 Revision history for Perl extension CGI::Application::PageBuilder.
 
+0.9 - Docs make a little more sense.  Took out the unnecessary pb_init().
+
 0.8 - Cleanup and test changes.
 
 0.7 - Switched to being a CGI::App plugin instead of a standalone module.
