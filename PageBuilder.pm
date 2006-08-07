@@ -59,13 +59,13 @@ Which arguably looks much cleaner.
 
 $self->pb_template( 'the_template_to_use.tmpl', ... );
 
-Adds the template to the page.  Any arguments past the template name are passed to HTML::Template. Returns the page contents.
+Adds the template to the page.  Any arguments past the template name are passed to HTML::Template.
 
 =head2 pb_param
 
 $self->pb_param( name, value );
 
-Sets the value for the param in the template.  This applies to the last template loaded by B<pb_template()>.  Returns the page contents.
+Sets the value for the param in the template.  This applies to the last template loaded by B<pb_template()>.
 
 =head2 pb_build
 
@@ -89,37 +89,27 @@ This module is free software; you can redistribute it and/or modify it under the
 
 =cut
 
-
 package CGI::Application::Plugin::PageBuilder;
-$VERSION = '0.9.1_1';
-
-use Carp;
+our $VERSION = "0.91";
+use strict;
 
 use base 'Exporter';
 use vars '@EXPORT';
 
-@EXPORT = qw(
-			 pb_init
-			 pb_template
-			 pb_param
-			 pb_build
-			);
+@EXPORT = qw( pb_template pb_param pb_build );
 
 sub pb_template {
 	my( $self, $template, %options ) = @_;
 
-	my $t_template = $self->load_tmpl( $template, %options );
-	return undef unless $t_template;
-
-	push( @{ $self->{__PB_TEMPLATE_LIST} }, $t_template );
 	$self->{__PB__TEMPLATE_COUNT}++;
-	return $self->pb_build();
+	my $status = $self->load_tmpl( $template, %options );
+	push( @{ $self->{__PB_TEMPLATE_LIST} }, $status );
+	return $status;
 }
 
 sub pb_build {
 	my $self = shift;
 
-	$self->{__PB_BUFFER} = '';
 	foreach my $template ( @{ $self->{__PB_TEMPLATE_LIST} } ) {
 		$self->{__PB_BUFFER} .= $template->output();
 	}
@@ -127,11 +117,21 @@ sub pb_build {
 }
 
 sub pb_param {
-	my( $self, $param, $value ) = @_;
+	my( $self ) = shift;
+	my( $param ) = shift;
 
-	return undef unless $value;
+	if ( ref( $param ) eq 'HASH' ) {
+		while ( my( $p, $v ) = each %{ $param } ) {
+			${${ $self->{__PB_TEMPLATE_LIST} }[$#{$self->{__PB_TEMPLATE_LIST}}]}->param( $p, $v );
+		}
+		return;
+	}
+
+	my $value = shift;
+	return undef unless( $value );
+
 	${$self->{__PB_TEMPLATE_LIST}}[$#{@{$self->{__PB__TEMPLATE_LIST}}}]->param( $param, $value );
-	return $self->pb_build();
+	return 1;
 }
 
 1;
