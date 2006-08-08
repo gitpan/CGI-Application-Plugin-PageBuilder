@@ -3,7 +3,7 @@ use strict;
 use warnings;
 
 use Test::More;
-plan tests => 25;
+plan tests => 27;
 
 my $data = {
             one => 'The one',
@@ -35,9 +35,10 @@ my $data = {
                       );
     }
 
-    sub default {
-        my $self = shift;
-        ok( $self->pb_template( 'test_top.tmpl' ), "pb_template" );
+	sub default {
+		my $self = shift;
+		ok( $self->pb_template( 'header.tmpl' ), 'pb_template' );
+		ok( $self->pb_template( 'test_top.tmpl' ), "pb_template" );
 
         while ( my( $k, $v ) = each( %{ $data } ) ) {
             ok( $self->pb_template( 'test_element.tmpl' ), "pb_template" );
@@ -59,7 +60,8 @@ my $data = {
         $html = $self->pb_build();
         ok( $html =~ m/doesntexist/g, "good check" );
         ok( $html =~ m/doesntexistvalue/g, "good value" );
-
+		# might as well make a complete page even if it's just a test.
+		ok( $self->pb_template( 'footer.tmpl' ), 'footer' );
     }
 }
 
