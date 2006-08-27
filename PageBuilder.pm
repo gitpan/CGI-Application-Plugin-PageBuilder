@@ -86,7 +86,7 @@ package CGI::Application::Plugin::PageBuilder;
 
 use base 'Exporter';
 use vars qw/ @EXPORT $VERSION /;
-$VERSION='0.92';
+$VERSION='0.93';
 
 @EXPORT = qw( pb_template pb_param pb_build );
 
