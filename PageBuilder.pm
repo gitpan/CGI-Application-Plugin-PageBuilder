@@ -83,10 +83,11 @@ This module is free software; you can redistribute it and/or modify it under the
 =cut
 
 package CGI::Application::Plugin::PageBuilder;
+use strict;
 
 use base 'Exporter';
 use vars qw/ @EXPORT $VERSION /;
-$VERSION='0.93';
+$VERSION='0.94';
 
 @EXPORT = qw( pb_template pb_param pb_build );
 

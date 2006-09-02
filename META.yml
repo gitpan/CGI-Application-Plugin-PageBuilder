@@ -1,11 +1,13 @@
-# http://module-build.sourceforge.net/META-spec.html
-#XXXXXXX This is a prototype!!!  It will change in the future!!! XXXXX#
-name:         CGI-Application-Plugin-PageBuilder
-version:      0.93
-version_from: PageBuilder.pm
-installdirs:  site
-requires:
+--- #YAML:1.0
+name:                CGI-Application-Plugin-PageBuilder
+version:             0.94
+abstract:            Simplifies building pages with multiple templates.
+license:             unknown
+generated_by:        ExtUtils::MakeMaker version 6.30_03
+author:              Clint Moore <cmoore@cpan.org>
+distribution_type:   module
+requires:     
     CGI::Application:              4.0
-
-distribution_type: module
-generated_by: ExtUtils::MakeMaker version 6.17
+meta-spec:
+    url: http://module-build.sourceforge.net/META-spec-new.html
+    version: 1.1
