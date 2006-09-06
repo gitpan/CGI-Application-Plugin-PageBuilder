@@ -1,6 +1,6 @@
 --- #YAML:1.0
 name:                CGI-Application-Plugin-PageBuilder
-version:             0.94
+version:             0.95
 abstract:            Simplifies building pages with multiple templates.
 license:             unknown
 generated_by:        ExtUtils::MakeMaker version 6.30_03
