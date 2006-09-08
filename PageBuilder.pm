@@ -87,7 +87,7 @@ use strict;
 
 use base 'Exporter';
 use vars qw/ @EXPORT $VERSION /;
-$VERSION='0.95';
+$VERSION='0.96';
 
 @EXPORT = qw( pb_template pb_param pb_build );
 
@@ -95,7 +95,7 @@ sub pb_template {
 	my( $self, $template, %options ) = @_;
 
 	my $t_template = $self->load_tmpl( $template, %options );
-	return undef unless $t_template;
+	return unless $t_template;
 
 	push( @{ $self->{__PB_TEMPLATE_LIST} }, $t_template );
 	$self->{__PB__TEMPLATE_COUNT}++;
@@ -115,7 +115,7 @@ sub pb_build {
 sub pb_param {
 	my( $self, $param, $value ) = @_;
 
-	return undef unless $value;
+	return unless $value;
 	${$self->{__PB_TEMPLATE_LIST}}[$#{@{$self->{__PB__TEMPLATE_LIST}}}]->param( $param, $value );
 	return $self->pb_build();
 }
