@@ -87,7 +87,7 @@ use strict;
 
 use base 'Exporter';
 use vars qw/ @EXPORT $VERSION /;
-$VERSION='0.96';
+$VERSION='0.97';
 
 @EXPORT = qw( pb_template pb_param pb_build );
 
