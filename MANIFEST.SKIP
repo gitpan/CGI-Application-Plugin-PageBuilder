@@ -1,0 +1,13 @@
+~$
+.tar.gz$
+.bak$
+.swp$
+.txt$
+blib/
+pm_to_blib/
+Makefile$
+^test/
+.hg/
+.hgignore$
+^MYMETA.json$
+^MYMETA.yml$

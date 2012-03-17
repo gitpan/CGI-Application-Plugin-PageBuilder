@@ -1,5 +1,9 @@
 Revision history for Perl extension CGI::Application::PageBuilder.
 
+0.98 20120317
+    - fixed bug 48498
+      -- tests should pass on 5.10+
+
 0.9 - Docs make a little more sense.  Took out the unnecessary pb_init().
 
 0.8 - Cleanup and test changes.

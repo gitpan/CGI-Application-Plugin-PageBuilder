@@ -12,6 +12,8 @@ t/templates/footer.tmpl
 t/templates/test_element.tmpl
 t/templates/test_bottom.tmpl
 t/templates/test_top.tmpl
-META.yml                                 Module meta-data (added by MakeMaker)
 eg/run.pl
 Build.PL
+MANIFEST.SKIP
+META.yml
+META.json

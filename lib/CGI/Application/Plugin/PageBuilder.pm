@@ -87,7 +87,7 @@ use strict;
 
 use base 'Exporter';
 use vars qw/ @EXPORT $VERSION /;
-$VERSION='0.97';
+$VERSION='0.98';
 
 @EXPORT = qw( pb_template pb_param pb_build );
 
@@ -116,7 +116,7 @@ sub pb_param {
 	my( $self, $param, $value ) = @_;
 
 	return unless $value;
-	${$self->{__PB_TEMPLATE_LIST}}[$#{@{$self->{__PB__TEMPLATE_LIST}}}]->param( $param, $value );
+	${$self->{__PB_TEMPLATE_LIST}}[-1]->param( $param, $value );
 	return $self->pb_build();
 }
 

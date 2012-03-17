@@ -1,0 +1,41 @@
+{
+   "abstract" : "Simplifies building pages with multiple templates.",
+   "author" : [
+      "Clint Moore E<lt>cmoore@cpan.orgE<gt>"
+   ],
+   "dynamic_config" : 1,
+   "generated_by" : "Module::Build version 0.4, CPAN::Meta::Converter version 2.120530",
+   "license" : [
+      "perl_5"
+   ],
+   "meta-spec" : {
+      "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
+      "version" : "2"
+   },
+   "name" : "CGI-Application-Plugin-PageBuilder",
+   "prereqs" : {
+      "configure" : {
+         "requires" : {
+            "Module::Build" : "0.4"
+         }
+      },
+      "runtime" : {
+         "requires" : {
+            "CGI::Application" : "4"
+         }
+      }
+   },
+   "provides" : {
+      "CGI::Application::Plugin::PageBuilder" : {
+         "file" : "lib/CGI/Application/Plugin/PageBuilder.pm",
+         "version" : "0.98"
+      }
+   },
+   "release_status" : "stable",
+   "resources" : {
+      "license" : [
+         "http://dev.perl.org/licenses/"
+      ]
+   },
+   "version" : "0.98"
+}
