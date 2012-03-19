@@ -21,14 +21,15 @@
       },
       "runtime" : {
          "requires" : {
-            "CGI::Application" : "4"
+            "CGI::Application" : "4",
+            "Test::Pod::Coverage" : "0"
          }
       }
    },
    "provides" : {
       "CGI::Application::Plugin::PageBuilder" : {
          "file" : "lib/CGI/Application/Plugin/PageBuilder.pm",
-         "version" : "0.98"
+         "version" : "0.99"
       }
    },
    "release_status" : "stable",
@@ -37,5 +38,5 @@
          "http://dev.perl.org/licenses/"
       ]
    },
-   "version" : "0.98"
+   "version" : "0.99"
 }

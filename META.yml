@@ -15,9 +15,10 @@ name: CGI-Application-Plugin-PageBuilder
 provides:
   CGI::Application::Plugin::PageBuilder:
     file: lib/CGI/Application/Plugin/PageBuilder.pm
-    version: 0.98
+    version: 0.99
 requires:
   CGI::Application: 4
+  Test::Pod::Coverage: 0
 resources:
   license: http://dev.perl.org/licenses/
-version: 0.98
+version: 0.99

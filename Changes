@@ -1,5 +1,8 @@
 Revision history for Perl extension CGI::Application::PageBuilder.
 
+0.99 20120319
+    - added a prereq_pm to Build.PL to satisfy build tests
+
 0.98 20120317
     - fixed bug 48498
       -- tests should pass on 5.10+
